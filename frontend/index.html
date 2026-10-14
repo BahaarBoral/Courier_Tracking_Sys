@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Smart Courier Tracking System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .features { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .feature-card { text-align: center; padding: 30px; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+        .feature-icon { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
+        nav { display: flex; justify-content: space-between; padding: 20px 40px; background: white; box-shadow: var(--shadow); align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        footer { background: var(--secondary); color: white; text-align: center; padding: 30px 20px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo"><i class="fas fa-truck-fast"></i> LogiTrack</div>
+        <div class="nav-actions">
+            <a href="tracking.html" class="btn btn-outline" style="margin-right:10px;">Track Shipment</a>
+            <a href="login.html" class="btn btn-primary" id="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Smart Courier Tracking System</h1>
+        <p>End-to-end logistics platform for modern businesses. Track packages in real-time, manage operations, and deliver with confidence.</p>
+        <div class="d-flex justify-center gap-20" style="justify-content: center;">
+            <a href="register.html" class="btn btn-success btn-lg" style="padding: 15px 30px; font-size: 1.1rem;">Get Started</a>
+            <a href="tracking.html" class="btn btn-outline" style="color: white; border-color: white; padding: 15px 30px; font-size: 1.1rem;">Track Package</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <h2 class="text-center mb-20" style="font-size: 2rem; margin-bottom: 50px;">Why Choose LogiTrack?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-location-crosshairs feature-icon"></i>
+                <h3>Real-time Tracking</h3>
+                <p class="text-muted mt-20">Track your shipments every step of the way with our precise location tracking.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-halved feature-icon"></i>
+                <h3>Secure Payments</h3>
+                <p class="text-muted mt-20">Fast and secure online payments for all your logistics needs.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-warehouse feature-icon"></i>
+                <h3>Warehouse Management</h3>
+                <p class="text-muted mt-20">Optimized routing and inventory tracking at our state-of-the-art facilities.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-route feature-icon"></i>
+                <h3>Route Optimization</h3>
+                <p class="text-muted mt-20">AI-powered routing ensuring the fastest delivery times possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 LogiTrack Logistics SaaS. All rights reserved.</p>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                const user = getUser();
+                const loginBtn = document.getElementById('login-btn');
+                loginBtn.innerText = 'Dashboard';
+                loginBtn.href = user.role === 'ADMIN' ? 'admin-dashboard.html' : 
+                               user.role === 'CUSTOMER' ? 'customer-dashboard.html' : 
+                               user.role === 'DELIVERY_AGENT' ? 'agent-dashboard.html' : 'warehouse-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-truck-fast"></i> LogiTrack
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-section="dashboard-section"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#" data-section="shipments-section"><i class="fas fa-boxes-stacked"></i> Shipments</a></li>
+                <li><a href="#" data-section="customers-section"><i class="fas fa-users"></i> Customers</a></li>
+                <li><a href="#" data-section="employees-section"><i class="fas fa-user-tie"></i> Employees</a></li>
+                <li><a href="#" data-section="warehouses-section"><i class="fas fa-warehouse"></i> Warehouses</a></li>
+                <li><a href="#" data-section="routes-section"><i class="fas fa-route"></i> Routes</a></li>
+                <li><a href="#" data-section="vehicles-section"><i class="fas fa-truck"></i> Vehicles</a></li>
+                <li><a href="#" data-section="payments-section"><i class="fas fa-credit-card"></i> Payments</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Admin Control Panel</h2>
+                <div class="user-info">
+                    <span class="user-name">Admin</span>
+                    <span class="badge red" style="margin-left: 10px;">Administrator</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Customers</h3>
+                            <p id="stat-customers">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-box"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Shipments</h3>
+                            <p id="stat-shipments">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-rupee-sign"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Revenue</h3>
+                            <p id="stat-revenue">₹0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-user-tie"></i></div>
+                        <div class="stat-info">
+                            <h3>Active Employees</h3>
+                            <p id="stat-employees">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card">
+                        <h3>Shipment Status Distribution</h3>
+                        <canvas id="statusChart" style="margin-top: 20px; max-height: 300px;"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>System Health</h3>
+                        <div class="mt-20">
+                            <div class="mb-20">
+                                <div class="d-flex justify-between mb-10"><span class="text-muted">Database</span><span class="text-success"><i class="fas fa-check-circle"></i> Online</span></div>
+                                <div class="d-flex justify-between mb-10"><span class="text-muted">Payment Gateway</span><span class="text-success"><i class="fas fa-check-circle"></i> Online</span></div>
+                                <div class="d-flex justify-between mb-10"><span class="text-muted">SMS API</span><span class="text-success"><i class="fas fa-check-circle"></i> Online</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shipments Section -->
+            <section id="shipments-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>All Shipments</h3>
+                        <div class="d-flex gap-10">
+                            <select id="admin-shipment-filter" class="form-group mb-0">
+                                <option value="">All Statuses</option>
+                                <option value="BOOKED">Booked</option>
+                                <option value="WAREHOUSE_RECEIVED">Warehouse Received</option>
+                                <option value="IN_TRANSIT">In Transit</option>
+                                <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                                <option value="DELIVERED">Delivered</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="admin-shipments-container"></div>
+                </div>
+            </section>
+
+            <!-- Customers Section -->
+            <section id="customers-section" class="content-section hidden">
+                <div class="card">
+                    <h3>Customers</h3>
+                    <div id="admin-customers-container" class="mt-20"></div>
+                </div>
+            </section>
+
+            <!-- Employees Section -->
+            <section id="employees-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Employees</h3>
+                        <button class="btn btn-primary" onclick="showEmployeeModal()"><i class="fas fa-plus"></i> Add Employee</button>
+                    </div>
+                    <div id="admin-employees-container"></div>
+                </div>
+            </section>
+            
+            <!-- Warehouses Section -->
+            <section id="warehouses-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Warehouses</h3>
+                        <button class="btn btn-primary" onclick="showWarehouseModal()"><i class="fas fa-plus"></i> Add Warehouse</button>
+                    </div>
+                    <div id="admin-warehouses-container"></div>
+                </div>
+            </section>
+
+            <!-- Routes Section -->
+            <section id="routes-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Routes</h3>
+                        <button class="btn btn-primary" onclick="showRouteModal()"><i class="fas fa-plus"></i> Add Route</button>
+                    </div>
+                    <div id="admin-routes-container"></div>
+                </div>
+            </section>
+
+            <!-- Vehicles Section -->
+            <section id="vehicles-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Vehicles</h3>
+                        <button class="btn btn-primary" onclick="showVehicleModal()"><i class="fas fa-plus"></i> Add Vehicle</button>
+                    </div>
+                    <div id="admin-vehicles-container"></div>
+                </div>
+            </section>
+
+            <!-- Payments Section -->
+            <section id="payments-section" class="content-section hidden">
+                <div class="card">
+                    <h3>Payments Overview</h3>
+                    <div id="admin-payments-container" class="mt-20"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Employee Modal Template -->
+    <template id="employee-form-template">
+        <form id="employee-form">
+            <input type="hidden" id="emp-id">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="emp-name" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="emp-email" required>
+            </div>
+            <div class="form-group">
+                <label>Password (Leave blank to keep current)</label>
+                <input type="password" id="emp-password">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select id="emp-role" required onchange="toggleRoleFields()">
+                    <option value="DELIVERY_AGENT">Delivery Agent</option>
+                    <option value="WAREHOUSE_STAFF">Warehouse Staff</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+            </div>
+            
+            <div id="agent-fields" class="role-specific mt-20" style="padding:15px; background:var(--bg); border-radius:var(--radius);">
+                <div class="form-group">
+                    <label>License Number</label>
+                    <input type="text" id="emp-license">
+                </div>
+                <div class="form-group">
+                    <label>Vehicle ID</label>
+                    <input type="number" id="emp-vehicle">
+                </div>
+            </div>
+            
+            <div id="warehouse-fields" class="role-specific mt-20 hidden" style="padding:15px; background:var(--bg); border-radius:var(--radius);">
+                <div class="form-group">
+                    <label>Warehouse ID</label>
+                    <input type="number" id="emp-warehouse">
+                </div>
+            </div>
+        </form>
+    </template>
+
+    <!-- Warehouse Modal Template -->
+    <template id="warehouse-form-template">
+        <form id="warehouse-form">
+            <input type="hidden" id="wh-id">
+            <div class="form-group">
+                <label>Warehouse Name</label>
+                <input type="text" id="wh-name" required placeholder="e.g. Hyderabad Cargo Center">
+            </div>
+            <div class="form-group">
+                <label>Location / City</label>
+                <input type="text" id="wh-location" required placeholder="e.g. Hyderabad, Telangana">
+            </div>
+            <div class="form-group">
+                <label>Capacity (Packages)</label>
+                <input type="number" id="wh-capacity" required placeholder="e.g. 150">
+            </div>
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="text" id="wh-contact" placeholder="e.g. 040-12345678">
+            </div>
+        </form>
+    </template>
+
+    <!-- Route Modal Template -->
+    <template id="route-form-template">
+        <form id="route-form">
+            <input type="hidden" id="route-id">
+            <div class="form-group">
+                <label>Source City</label>
+                <input type="text" id="route-source" required placeholder="e.g. Mumbai">
+            </div>
+            <div class="form-group">
+                <label>Destination City</label>
+                <input type="text" id="route-destination" required placeholder="e.g. Bangalore">
+            </div>
+            <div class="form-group">
+                <label>Distance (km)</label>
+                <input type="number" step="0.1" id="route-distance" required placeholder="e.g. 980">
+            </div>
+            <div class="form-group">
+                <label>Estimated Transit Time (hours)</label>
+                <input type="number" step="0.5" id="route-time" required placeholder="e.g. 24">
+            </div>
+        </form>
+    </template>
+
+    <!-- Vehicle Modal Template -->
+    <template id="vehicle-form-template">
+        <form id="vehicle-form">
+            <input type="hidden" id="veh-id">
+            <div class="form-group">
+                <label>Vehicle License Plate</label>
+                <input type="text" id="veh-number" required placeholder="e.g. MH-02-CD-9876">
+            </div>
+            <div class="form-group">
+                <label>Vehicle Type</label>
+                <select id="veh-type" required>
+                    <option value="BIKE">Bike</option>
+                    <option value="VAN">Van</option>
+                    <option value="TRUCK">Truck</option>
+                    <option value="CARGO">Cargo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Capacity (kg)</label>
+                <input type="number" step="0.5" id="veh-capacity" required placeholder="e.g. 500">
+            </div>
+        </form>
+    </template>
+
+    <!-- Assign Agent Modal Template -->
+    <template id="assign-agent-template">
+        <form id="assign-agent-form">
+            <div class="form-group">
+                <label>Select Delivery Agent</label>
+                <select id="assign-agent-select" required>
+                    <option value="">Loading delivery agents...</option>
+                </select>
+            </div>
+            <p class="text-muted" style="font-size:0.85rem; margin-top:8px;">
+                <i class="fas fa-info-circle"></i> Assigning this shipment creates a delivery task in the selected agent's dashboard.
+            </p>
+        </form>
+    </template>
+
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

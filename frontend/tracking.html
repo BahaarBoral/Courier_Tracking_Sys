@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Shipment - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo"><i class="fas fa-truck-fast"></i> LogiTrack</a>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-primary" id="nav-btn">Login / Dashboard</a>
+        </div>
+    </nav>
+
+    <div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+        <div class="card text-center" style="padding: 40px 20px;">
+            <h2>Track Your Shipment</h2>
+            <p class="text-muted mb-20">Enter your tracking number below</p>
+            
+            <form id="track-form" style="max-width: 500px; margin: 0 auto; display: flex; gap: 10px;">
+                <input type="text" id="tracking-id" placeholder="e.g. TRK-123456789" required style="flex: 1;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Track</button>
+            </form>
+        </div>
+
+        <div id="tracking-result" class="hidden">
+            <div class="grid" style="grid-template-columns: 2fr 1fr;">
+                <!-- Timeline Section -->
+                <div class="card">
+                    <div class="d-flex justify-between align-center border-bottom mb-20" style="padding-bottom: 15px; border-bottom: 1px solid var(--border);">
+                        <h3>Tracking History</h3>
+                        <div id="status-badge-container"></div>
+                    </div>
+                    <div class="timeline" id="timeline-container">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Details Section -->
+                <div>
+                    <div class="card">
+                        <h3>Shipment Details</h3>
+                        <div class="mt-20">
+                            <p class="text-muted" style="font-size: 0.85rem;">Tracking Number</p>
+                            <p class="mb-20" style="font-weight: 600;" id="det-tracking"></p>
+                            
+                            <p class="text-muted" style="font-size: 0.85rem;">From</p>
+                            <p class="mb-20" id="det-from"></p>
+                            
+                            <p class="text-muted" style="font-size: 0.85rem;">To</p>
+                            <p class="mb-20" id="det-to"></p>
+                            
+                            <p class="text-muted" style="font-size: 0.85rem;">Expected Delivery</p>
+                            <p id="det-eta"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-20">
+                        <h3>Parcel Info</h3>
+                        <div class="mt-20">
+                            <div class="d-flex justify-between mb-10">
+                                <span class="text-muted">Type:</span>
+                                <span id="det-type"></span>
+                            </div>
+                            <div class="d-flex justify-between mb-10">
+                                <span class="text-muted">Weight:</span>
+                                <span id="det-weight"></span>
+                            </div>
+                            <div class="d-flex justify-between mb-10">
+                                <span class="text-muted">Service:</span>
+                                <span id="det-service"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/tracking.js"></script>
+</body>
+</html>

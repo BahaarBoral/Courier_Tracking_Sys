@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-truck-fast"></i> LogiTrack
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-section="dashboard-section"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#" data-section="deliveries-section"><i class="fas fa-motorcycle"></i> My Deliveries</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Delivery Agent Portal</h2>
+                <div class="user-info">
+                    <span class="user-name">Agent</span>
+                    <span class="badge orange" style="margin-left: 10px;">Agent</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Assigned</h3>
+                            <p id="stat-assigned">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-truck"></i></div>
+                        <div class="stat-info">
+                            <h3>In Transit</h3>
+                            <p id="stat-transit">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-check-double"></i></div>
+                        <div class="stat-info">
+                            <h3>Delivered Today</h3>
+                            <p id="stat-delivered">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Current Active Deliveries</h3>
+                        <button class="btn btn-sm btn-outline" onclick="loadDashboard()"><i class="fas fa-sync"></i> Refresh</button>
+                    </div>
+                    <div id="active-deliveries-container">
+                        <div class="loading-overlay"><span class="spinner"></span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deliveries Section -->
+            <section id="deliveries-section" class="content-section hidden">
+                <div class="card">
+                    <h3>All Deliveries</h3>
+                    <div class="form-group mt-20" style="max-width: 300px;">
+                        <select id="agent-filter">
+                            <option value="">All Statuses</option>
+                            <option value="ASSIGNED">Assigned</option>
+                            <option value="IN_TRANSIT">In Transit</option>
+                            <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                            <option value="DELIVERED">Delivered</option>
+                        </select>
+                    </div>
+                    <div id="all-deliveries-container"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Delivery Detail Modal Template -->
+    <template id="delivery-action-template">
+        <div id="delivery-details-content">
+            <!-- Populated by JS -->
+        </div>
+    </template>
+
+    <script src="js/common.js"></script>
+    <script src="js/agent.js"></script>
+</body>
+</html>

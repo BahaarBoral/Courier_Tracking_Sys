@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="index.html"><h1><i class="fas fa-truck-fast"></i> LogiTrack</h1></a>
+            <p class="text-muted mt-20">Welcome back! Please login to your account.</p>
+        </div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                    <i class="fas fa-eye password-toggle" id="toggle-password"></i>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block mt-20" id="login-btn">Login</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+            
+            <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <p class="text-muted" style="font-size: 0.8rem; cursor: pointer;" onclick="document.getElementById('demo-creds').classList.toggle('hidden')">
+                    <i class="fas fa-info-circle"></i> View Demo Credentials
+                </p>
+                <div id="demo-creds" class="hidden" style="margin-top: 10px; font-size: 0.8rem; background: var(--bg); padding: 12px; border-radius: var(--radius); text-align: left; line-height: 1.8;">
+                    <p><strong>Password for all:</strong> <code>Demo@123</code></p>
+                    <p style="margin-top: 4px; font-size: 0.75rem; color: var(--text-muted);">(Click any role below to autofill)</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 6px 0;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <button type="button" class="btn btn-sm btn-outline" style="text-align: left; padding: 4px 8px;" onclick="fillDemo('admin.demo@example.com')">
+                            <i class="fas fa-user-shield"></i> <strong>Admin:</strong> admin.demo@example.com
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline" style="text-align: left; padding: 4px 8px;" onclick="fillDemo('customer.demo@example.com')">
+                            <i class="fas fa-user"></i> <strong>Customer:</strong> customer.demo@example.com
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline" style="text-align: left; padding: 4px 8px;" onclick="fillDemo('agent.demo@example.com')">
+                            <i class="fas fa-motorcycle"></i> <strong>Delivery Agent:</strong> agent.demo@example.com
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline" style="text-align: left; padding: 4px 8px;" onclick="fillDemo('warehouse.demo@example.com')">
+                            <i class="fas fa-warehouse"></i> <strong>Warehouse Staff:</strong> warehouse.demo@example.com
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

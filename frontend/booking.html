@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Shipment - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-truck-fast"></i> LogiTrack
+            </div>
+            <ul class="nav-links">
+                <li><a href="customer-dashboard.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Book a New Shipment</h2>
+                <div class="user-info">
+                    <span class="user-name">Customer</span>
+                </div>
+            </div>
+
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <form id="booking-form">
+                    
+                    <h3 class="mb-20"><i class="fas fa-box"></i> Parcel Details</h3>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Parcel Type</label>
+                            <select id="type" required>
+                                <option value="DOCUMENT">Document</option>
+                                <option value="SMALL_PACKAGE" selected>Small Package</option>
+                                <option value="MEDIUM_PACKAGE">Medium Package</option>
+                                <option value="LARGE_PACKAGE">Large Package</option>
+                                <option value="FRAGILE">Fragile</option>
+                                <option value="HEAVY">Heavy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1" min="0.1" value="1.5" required>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Dimensions (L x W x H in cm)</label>
+                            <div style="display:flex; gap: 10px;">
+                                <input type="number" id="dim-l" placeholder="L" value="15" style="width: 33%">
+                                <input type="number" id="dim-w" placeholder="W" value="10" style="width: 33%">
+                                <input type="number" id="dim-h" placeholder="H" value="5" style="width: 33%">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: flex-end; padding-bottom: 15px;">
+                            <label style="display:flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="is-fragile" style="width: auto;"> 
+                                This item is fragile
+                            </label>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-20 mt-20" style="padding-top: 20px; border-top: 1px solid var(--border);"><i class="fas fa-route"></i> Routing Details</h3>
+                    
+                    <div class="form-group">
+                        <label>Receiver Name</label>
+                        <input type="text" id="receiver-name" placeholder="Receiver full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Receiver Phone</label>
+                        <input type="text" id="receiver-phone" placeholder="+91 9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Receiver Full Address</label>
+                        <textarea id="receiver-address" rows="2" placeholder="Delivery street address, city, pincode" required></textarea>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Select Route</label>
+                            <select id="route" required>
+                                <option value="">Loading routes...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Type</label>
+                            <select id="delivery-type" required>
+                                <option value="STANDARD">Standard</option>
+                                <option value="EXPRESS">Express</option>
+                                <option value="OVERNIGHT">Overnight</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-20 mt-20" style="padding-top: 20px; border-top: 1px solid var(--border);"><i class="fas fa-credit-card"></i> Payment Details</h3>
+                    <div class="card" style="background: #f8fafc; border: 1px dashed var(--accent); padding: 12px 15px; margin-bottom: 15px;">
+                        <small style="color: var(--text-muted);"><i class="fas fa-info-circle" style="color: var(--info);"></i> <strong>Academic DBMS Simulation:</strong> Payment is automatically confirmed as a mock/demo transaction. Real funds or credit cards are not processed.</small>
+                    </div>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select id="payment-method" required>
+                                <option value="UPI">UPI (Demo Sim)</option>
+                                <option value="CREDIT_CARD">Credit Card (Demo Sim)</option>
+                                <option value="DEBIT_CARD">Debit Card (Demo Sim)</option>
+                                <option value="NET_BANKING">Net Banking (Demo Sim)</option>
+                                <option value="CASH">Cash on Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated Cost (Calculated by Oracle)</label>
+                            <div id="cost-estimate" style="font-size: 1.5rem; font-weight: bold; color: var(--success); padding: 5px 0;">₹ 0.00</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: right;">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submit-btn" style="padding: 12px 30px;">
+                            <i class="fas fa-shield-alt"></i> Confirm & Mock Pay
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>

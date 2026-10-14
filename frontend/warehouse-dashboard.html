@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Dashboard - LogiTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-truck-fast"></i> LogiTrack
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-section="dashboard-section"><i class="fas fa-warehouse"></i> Dashboard</a></li>
+                <li><a href="#" data-section="incoming-section"><i class="fas fa-arrow-right-to-bracket"></i> Incoming</a></li>
+                <li><a href="#" data-section="dispatch-section"><i class="fas fa-truck-ramp-box"></i> Dispatch</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Warehouse Management</h2>
+                <div class="user-info">
+                    <span class="user-name">Staff</span>
+                    <span class="badge purple" style="margin-left: 10px;">Warehouse Staff</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <div class="card mb-20" style="background: var(--primary); color: white;">
+                    <div class="d-flex justify-between align-center">
+                        <div>
+                            <h3 style="color: white; margin-bottom: 5px;">Warehouse: <span id="wh-name">Loading...</span></h3>
+                            <p style="opacity: 0.8; font-size: 0.875rem;">Code: <strong id="wh-code">-</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-boxes-packing"></i></div>
+                        <div class="stat-info">
+                            <h3>Current Inventory</h3>
+                            <p id="stat-inventory">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-arrow-right-to-bracket"></i></div>
+                        <div class="stat-info">
+                            <h3>Expected Incoming</h3>
+                            <p id="stat-incoming">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-truck-ramp-box"></i></div>
+                        <div class="stat-info">
+                            <h3>Ready for Dispatch</h3>
+                            <p id="stat-dispatch">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Capacity Utilization</h3>
+                    <div class="mt-20">
+                        <div class="d-flex justify-between mb-10">
+                            <span>Usage</span>
+                            <span id="capacity-text">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar" id="capacity-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Incoming Section -->
+            <section id="incoming-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Receive Incoming Shipments</h3>
+                        <button class="btn btn-sm btn-outline" onclick="loadIncoming()"><i class="fas fa-sync"></i> Refresh</button>
+                    </div>
+                    <p class="text-muted mb-20">Scan or select shipments arriving at this warehouse.</p>
+                    <div id="incoming-container"></div>
+                </div>
+            </section>
+            
+            <!-- Dispatch Section -->
+            <section id="dispatch-section" class="content-section hidden">
+                <div class="card">
+                    <div class="d-flex justify-between align-center mb-20">
+                        <h3>Dispatch Shipments</h3>
+                        <button class="btn btn-sm btn-outline" onclick="loadDispatch()"><i class="fas fa-sync"></i> Refresh</button>
+                    </div>
+                    <p class="text-muted mb-20">Select shipments ready to be dispatched to next destination or delivery agent.</p>
+                    <div id="dispatch-container"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/warehouse.js"></script>
+</body>
+</html>
