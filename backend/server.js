@@ -18,6 +18,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// Auto-export live database state to live_database_records.txt on any mutating HTTP request
+const { triggerLiveSync, exportLiveDatabase } = require('./utils/liveSync');
+app.use((req, res, next) => {
+  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method)) {
+    res.on('finish', () => {
+      if (res.statusCode >= 200 && res.statusCode < 400) {
+        triggerLiveSync();
+      }
+    });
+  }
+  next();
+});
+
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../frontend')));
 
@@ -64,6 +77,11 @@ async function startServer() {
     await database.initialize();
     global.oracleConnected = true;
     console.log('✅ Oracle database pool initialized successfully');
+
+    // Auto-generate live_database_records.txt on startup
+    exportLiveDatabase();
+    // Periodic background sync every 15 seconds to catch direct SQL*Plus terminal modifications
+    setInterval(triggerLiveSync, 15000);
   } catch (err) {
     global.oracleConnected = false;
     console.error('❌ Oracle database connection FAILED:', err.message);
