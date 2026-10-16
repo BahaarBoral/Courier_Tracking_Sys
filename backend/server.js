@@ -80,8 +80,6 @@ async function startServer() {
 
     // Auto-generate live_database_records.txt on startup
     exportLiveDatabase();
-    // Periodic background sync every 15 seconds to catch direct SQL*Plus terminal modifications
-    setInterval(triggerLiveSync, 15000);
   } catch (err) {
     global.oracleConnected = false;
     console.error('❌ Oracle database connection FAILED:', err.message);
